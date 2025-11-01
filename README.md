@@ -1,73 +1,232 @@
-# React + TypeScript + Vite
+# Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive weather application built with React, TypeScript, and Redux Toolkit. Track weather conditions for cities worldwide with offline support and personalized favorites.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🌍 **Global Weather Data**: View current weather for 15 major cities by default
+- 🔍 **City Search**: Search and add any city worldwide
+- ⭐ **Favorites**: Mark cities as favorites for quick access
+- 📝 **Weather Notes**: Add and save personal notes for each city
+- 📍 **User Location**: Get weather for your current location
+- 💾 **Offline Support**: Access cached weather data when offline
+- 🎨 **Modern UI**: Clean, responsive design with Tailwind CSS
+- ⚡ **Optimized Performance**: Efficient data caching and rendering
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Redux Toolkit** - State management
+- **React Router** - Navigation
+- **Tailwind CSS** - Styling
+- **Vite** - Build tool
+- **Axios** - HTTP client
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js (v16 or higher)
+- npm or yarn
+- Free API keys from:
+  - [Weatherstack](https://weatherstack.com/) - Weather data
+  - [GeoNames](https://www.geonames.org/) - City search
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. **Clone the repository**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+   ```bash
+   git clone <your-repo-url>
+   cd weather-app
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+
+   Create a `.env` file in the root directory:
+
+   ```bash
+   VITE_WEATHERSTACK_API_KEY=your_weatherstack_api_key
+   VITE_GEONAMES_USERNAME=your_geonames_username
+   ```
+
+   To get your API keys:
+
+   - **Weatherstack**: Sign up at https://weatherstack.com/ (free tier available)
+   - **GeoNames**: Register at https://www.geonames.org/login (free account)
+
+4. **Run the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+
+   Navigate to `http://localhost:5173`
+
+## Building for Production
+
+```bash
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The optimized production build will be in the `dist` folder.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+To preview the production build locally:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run preview
 ```
+
+## Project Structure
+
+```
+src/
+├── components/         # Reusable UI components
+│   ├── CityCard.tsx
+│   ├── Navbar.tsx
+│   └── SearchBar.tsx
+├── pages/             # Page components
+│   ├── HomePage.tsx
+│   ├── CityDetailsPage.tsx
+│   └── UserLocationPage.tsx
+├── store/             # Redux store and slices
+│   ├── slices/
+│   │   ├── weatherSlice.ts
+│   │   ├── favoritesSlice.ts
+│   │   ├── notesSlice.ts
+│   │   └── userLocationSlice.ts
+│   ├── hooks.ts
+│   └── index.ts
+├── services/          # API services
+│   ├── weatherAPI.ts
+│   ├── geoAPI.ts
+│   └── storage.ts
+├── types/             # TypeScript types
+│   └── index.ts
+├── utils/             # Utility functions
+│   ├── constants.ts
+│   └── helpers.ts
+├── App.tsx
+├── main.tsx
+└── router.tsx
+```
+
+## Usage
+
+### Viewing Weather
+
+- The home page displays weather for 15 major cities
+- Click on any city card to view detailed weather information
+
+### Searching for Cities
+
+- Use the search bar at the top of the home page
+- Type at least 2 characters to see suggestions
+- Click on a suggestion to add it to your list
+
+### Managing Favorites
+
+- Click the "☆ Favorite" button on any city card
+- Favorite cities appear at the top of the list
+- Click "★ Favorited" to remove from favorites
+
+### Adding Notes
+
+- Navigate to a city's detail page
+- Use the "Weather Notes" section to add observations
+- Notes are saved automatically to localStorage
+
+### Using Your Location
+
+- Click "My Location" in the navigation
+- Grant location permission when prompted
+- View weather for your current location
+
+### Offline Mode
+
+- The app automatically detects when you're offline
+- Cached weather data remains accessible
+- Search functionality is disabled offline
+
+## Features Explained
+
+### Data Caching
+
+- Weather data is cached for 30 minutes
+- All data persists in localStorage
+- Automatic cache invalidation and refresh
+
+### State Management
+
+- Redux Toolkit for centralized state
+- Separate slices for weather, favorites, notes, and location
+- Optimized selectors for performance
+
+### Responsive Design
+
+- Mobile-first approach
+- Adapts to all screen sizes
+- Touch-friendly interactions
+
+## API Rate Limits
+
+**Important**: Free tier APIs have rate limits:
+
+- **Weatherstack**: 100 requests/month on free tier
+- **GeoNames**: 20,000 requests/day on free tier
+
+The app implements:
+
+- Aggressive caching (30 min)
+- Sequential API calls with delays
+- Offline functionality to reduce requests
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## Troubleshooting
+
+### "City not found" error
+
+- Check if the city name is spelled correctly
+- Try searching with country name (e.g., "Paris, France")
+
+### Weather not updating
+
+- Check your internet connection
+- Verify API keys are correct in `.env`
+- Check browser console for errors
+
+### Location not working
+
+- Ensure location permission is granted in browser settings
+- Try using HTTPS (required for geolocation)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Acknowledgments
+
+- Weather data provided by [Weatherstack](https://weatherstack.com/)
+- City data provided by [GeoNames](https://www.geonames.org/)
+- Icons from [Heroicons](https://heroicons.com/)
+
+## Contact
+
+For questions or feedback, please open an issue on GitHub.
