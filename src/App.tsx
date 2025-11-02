@@ -22,9 +22,17 @@ function App() {
     dispatch(loadNotes());
     dispatch(loadUserLocation());
 
-    // Fetch fresh data if online
-    if (isOnline()) {
-      dispatch(fetchDefaultCities());
+    const lastSync = localStorage.getItem("last_sync");
+    const cacheAge = lastSync ? Date.now() - parseInt(lastSync) : Infinity;
+    const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
+
+    if (isOnline() && cacheAge > CACHE_DURATION) {
+      const cachedCities = localStorage.getItem("weather_cache");
+      const hasCities = cachedCities && JSON.parse(cachedCities);
+
+      if (!hasCities || Object.keys(hasCities).length === 0) {
+        dispatch(fetchDefaultCities());
+      }
     }
   }, [dispatch]);
 

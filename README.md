@@ -182,11 +182,44 @@ src/
 - **Weatherstack**: 100 requests/month on free tier
 - **GeoNames**: 20,000 requests/day on free tier
 
-The app implements:
+### Managing API Quota
 
-- Aggressive caching (30 min)
-- Sequential API calls with delays
-- Offline functionality to reduce requests
+The app implements several strategies to conserve your API quota:
+
+1. **Aggressive Caching**: Weather data is cached for 30 minutes
+2. **No Auto-Refresh**: Cities are loaded from cache on startup
+3. **Manual Refresh**: Use "Refresh All" button only when needed
+4. **Mock Data Mode**: Use mock data during development
+
+### Using Mock Data
+
+To avoid exhausting your API quota during development:
+
+**Option 1: Set environment variable**
+
+```bash
+# In .env file
+VITE_USE_MOCK_DATA=true
+```
+
+**Option 2: Load mock data from UI**
+
+- On first load, click "📊 Load Mock Data (Free)" button
+- This generates realistic fake weather data
+- No API calls are made
+
+**Option 3: Use cached data**
+
+- The app automatically loads cached data on startup
+- Only refresh when you need updated weather
+
+### API Quota Tips
+
+- Each "Refresh All" uses **15 API requests**
+- Searching and adding cities uses **1 request per city**
+- Individual city refresh uses **1 request**
+- With 100 requests/month, you can refresh all cities ~6 times
+- Use mock data for testing and development
 
 ## Browser Support
 
