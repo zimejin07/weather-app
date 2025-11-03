@@ -7,6 +7,7 @@ import {
   selectLocationError,
 } from "../store/slices/userLocationSlice";
 import { formatTemperature, formatDate } from "../utils/helpers";
+import WeatherIcon from "../components/WeatherIcon";
 
 const UserLocationPage = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +27,7 @@ const UserLocationPage = () => {
         <div className="bg-white rounded-xl shadow-md p-8 text-center">
           <div className="mb-6">
             <svg
-              className="mx-auto h-16 w-16 text-primary-600"
+              className="mx-auto h-16 w-16 text-blue-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -67,7 +68,7 @@ const UserLocationPage = () => {
   if (loading) {
     return (
       <div className="text-center py-12">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
         <p className="mt-4 text-gray-600">Getting your location...</p>
       </div>
     );
@@ -128,17 +129,11 @@ const UserLocationPage = () => {
               </h2>
               <p className="text-xl text-gray-600">{location.country}</p>
             </div>
-            {location.conditionIcon && (
-              <img
-                src={location.conditionIcon}
-                alt={location.condition}
-                className="w-20 h-20"
-              />
-            )}
+            <WeatherIcon condition={location.condition} size="lg" />
           </div>
 
           <div className="mb-6">
-            <div className="text-6xl font-bold text-primary-600">
+            <div className="text-6xl font-bold text-blue-600">
               {formatTemperature(location.temperature)}
             </div>
             <p className="text-xl text-gray-600 mt-2">{location.condition}</p>

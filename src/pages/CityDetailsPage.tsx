@@ -15,6 +15,7 @@ import {
   deleteNote,
 } from "../store/slices/notesSlice";
 import { formatTemperature, formatDate, isOnline } from "../utils/helpers";
+import WeatherIcon from "../components/WeatherIcon";
 
 const CityDetailsPage = () => {
   const { cityId } = useParams<{ cityId: string }>();
@@ -115,18 +116,12 @@ const CityDetailsPage = () => {
             </h1>
             <p className="text-xl text-gray-600">{city.country}</p>
           </div>
-          {city.conditionIcon && (
-            <img
-              src={city.conditionIcon}
-              alt={city.condition}
-              className="w-20 h-20"
-            />
-          )}
+          <WeatherIcon condition={city.condition} size="lg" />
         </div>
 
         <div className="flex items-center justify-between mb-6">
           <div>
-            <div className="text-6xl font-bold text-primary-600">
+            <div className="text-6xl font-bold text-blue-600">
               {formatTemperature(city.temperature)}
             </div>
             <p className="text-xl text-gray-600 mt-2">{city.condition}</p>
@@ -225,7 +220,7 @@ const CityDetailsPage = () => {
           {savedNote && !isEditingNote && (
             <button
               onClick={() => setIsEditingNote(true)}
-              className="text-primary-600 hover:text-primary-700 font-medium"
+              className="text-blue-600 hover:text-blue-700 font-medium"
             >
               Edit
             </button>
