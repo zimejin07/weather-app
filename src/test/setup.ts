@@ -5,12 +5,10 @@ import * as matchers from "@testing-library/jest-dom/matchers";
 // Extend Vitest's expect with jest-dom matchers
 expect.extend(matchers);
 
-// Cleanup after each test
 afterEach(() => {
   cleanup();
 });
 
-// Mock localStorage
 const localStorageMock = (() => {
   let store: Record<string, string> = {};
 
@@ -36,7 +34,6 @@ Object.defineProperty(global.navigator, "onLine", {
   value: true,
 });
 
-// Mock geolocation
 const mockGeolocation = {
   getCurrentPosition: vi.fn(),
   watchPosition: vi.fn(),

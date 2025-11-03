@@ -6,7 +6,7 @@ import favoritesReducer, {
   loadFavorites,
   selectIsFavorite,
 } from "../favoritesSlice";
-import { FavoritesState } from "../../../types";
+import type { FavoritesState } from "../../../types";
 
 describe("favoritesSlice", () => {
   const initialState: FavoritesState = {

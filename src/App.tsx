@@ -16,7 +16,6 @@ function App() {
   const [online, setOnline] = useState(navigator.onLine);
 
   useEffect(() => {
-    // Load cached data from localStorage
     dispatch(loadCachedData());
     dispatch(loadFavorites());
     dispatch(loadNotes());
@@ -37,7 +36,6 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    // Listen for online/offline events
     const handleOnline = () => setOnline(true);
     const handleOffline = () => setOnline(false);
 

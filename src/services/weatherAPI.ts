@@ -99,7 +99,6 @@ class WeatherAPIService {
     cities: Array<{ name: string; country: string }>
   ): Promise<CityWeather[]> {
     try {
-      // Note: Free tier has rate limits, so we'll fetch sequentially with delays
       const weatherData: CityWeather[] = [];
 
       for (const city of cities) {

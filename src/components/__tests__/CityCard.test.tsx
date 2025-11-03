@@ -3,6 +3,7 @@ import { screen, fireEvent } from "@testing-library/react";
 import { renderWithProviders } from "../../test/utils";
 import CityCard from "../CityCard";
 import { mockCityWeather } from "../../test/mockData";
+import "@testing-library/jest-dom";
 
 // Mock useNavigate
 const mockNavigate = vi.fn();
@@ -15,7 +16,7 @@ vi.mock("react-router-dom", async () => {
 });
 
 // Mock window.confirm
-global.confirm = vi.fn(() => true);
+window.confirm = vi.fn(() => true);
 
 describe("CityCard", () => {
   it("should render city information correctly", () => {
