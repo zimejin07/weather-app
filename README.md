@@ -1,265 +1,340 @@
 # Weather App
+A modern weather application built with React, TypeScript, and Redux Toolkit. Provides global weather data, offline access, and interactive UI features. When Weatherstack API quota is reached, the app automatically relies on local cached data to ensure continuous functionality.
 
-A modern, responsive weather application built with React, TypeScript, and Redux Toolkit. Track weather conditions for cities worldwide with offline support and personalized favorites.
+![Weather App](https://img.shields.io/badge/React-18-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-cyan) ![Tests](https://img.shields.io/badge/Tests-Passing-green)
 
 ## Features
 
-- 🌍 **Global Weather Data**: View current weather for 15 major cities by default
-- 🔍 **City Search**: Search and add any city worldwide
-- ⭐ **Favorites**: Mark cities as favorites for quick access
-- 📝 **Weather Notes**: Add and save personal notes for each city
-- 📍 **User Location**: Get weather for your current location
-- 💾 **Offline Support**: Access cached weather data when offline
-- 🎨 **Modern UI**: Clean, responsive design with Tailwind CSS
-- ⚡ **Optimized Performance**: Efficient data caching and rendering
+### Core Functionality
+- Global weather for 15 major cities on first load
+
+- City search with autocomplete
+
+- Favorites list (alphabetical)
+
+- Notes per city, stored locally
+
+- Geolocation-based weather
+
+- Offline mode with cached weather
+
+- Dynamic animations and backgrounds based on weather
+
+- Fully responsive UI
 
 ## Tech Stack
 
-- **React 18** - UI framework
-- **TypeScript** - Type safety
+- **React 19** 
+- **TypeScript 5**
 - **Redux Toolkit** - State management
-- **React Router** - Navigation
-- **Tailwind CSS** - Styling
-- **Vite** - Build tool
+- **React Router v6** - Client-side routing
+- **Tailwind CSS v4** - Utility-first styling
+- **Vite** - Lightning-fast build tool
+- **Vitest** - Unit and integration testing
+- **Happy-dom** - Fast DOM testing environment
 - **Axios** - HTTP client
 
 ## Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v18 or higher recommended)
 - npm or yarn
 - Free API keys from:
-  - [Weatherstack](https://weatherstack.com/) - Weather data
-  - [GeoNames](https://www.geonames.org/) - City search
+  - [Weatherstack](https://weatherstack.com/) - Weather data (100 requests/month free)
+  - [GeoNames](https://www.geonames.org/) - City search (20,000 requests/day free)
 
 ## Installation
 
-1. **Clone the repository**
-
-   ```bash
-   git clone <your-repo-url>
-   cd weather-app
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-
-   Create a `.env` file in the root directory:
-
-   ```bash
-   VITE_WEATHERSTACK_API_KEY=your_weatherstack_api_key
-   VITE_GEONAMES_USERNAME=your_geonames_username
-   ```
-
-   To get your API keys:
-
-   - **Weatherstack**: Sign up at https://weatherstack.com/ (free tier available)
-   - **GeoNames**: Register at https://www.geonames.org/login (free account)
-
-4. **Run the development server**
-
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-
-   Navigate to `http://localhost:5173`
-
-## Building for Production
-
+### 1. Clone the repository
 ```bash
-npm run build
+git clone https://github.com/zimejin07/weather-app.git
+cd weather-app
 ```
 
-The optimized production build will be in the `dist` folder.
-
-To preview the production build locally:
-
+### 2. Install dependencies
 ```bash
-npm run preview
+npm install
 ```
 
-## Project Structure
+### 3. Set up environment variables
 
+Create a `.env` file in the root directory:
+```bash
+# Weather API (sign up at https://weatherstack.com/)
+VITE_WEATHERSTACK_API_KEY=your_weatherstack_api_key
+
+# GeoNames API (register at https://www.geonames.org/login)
+VITE_GEONAMES_USERNAME=your_geonames_username
+
+# Optional: Use mock data to save API quota during development
+VITE_USE_MOCK_DATA=true
 ```
-src/
-├── components/         # Reusable UI components
-│   ├── CityCard.tsx
-│   ├── Navbar.tsx
-│   └── SearchBar.tsx
-├── pages/             # Page components
-│   ├── HomePage.tsx
-│   ├── CityDetailsPage.tsx
-│   └── UserLocationPage.tsx
-├── store/             # Redux store and slices
-│   ├── slices/
-│   │   ├── weatherSlice.ts
-│   │   ├── favoritesSlice.ts
-│   │   ├── notesSlice.ts
-│   │   └── userLocationSlice.ts
-│   ├── hooks.ts
-│   └── index.ts
-├── services/          # API services
-│   ├── weatherAPI.ts
-│   ├── geoAPI.ts
-│   └── storage.ts
-├── types/             # TypeScript types
-│   └── index.ts
-├── utils/             # Utility functions
-│   ├── constants.ts
-│   └── helpers.ts
-├── App.tsx
-├── main.tsx
-└── router.tsx
+
+**Getting API Keys:**
+- **Weatherstack**: Sign up at https://weatherstack.com/, verify email, get API key from dashboard
+- **GeoNames**: Register at https://www.geonames.org/login, verify email, activate free web services
+
+### 4. Run the development server
+```bash
+npm run dev
 ```
+
+### 5. Open your browser
+Navigate to `http://localhost:5173`
 
 ## Usage
 
+### First Time Setup
+
+When you first open the app, you'll see an empty state with two options:
+
+1. **📊 Load Mock Data (Free)** - Generates realistic weather data without using API quota (for testing)
+2. **🌍 Load Real Data (15 API calls)** - Fetches real weather for 15 major cities
+
 ### Viewing Weather
 
-- The home page displays weather for 15 major cities
-- Click on any city card to view detailed weather information
+- City cards display temperature, condition, humidity, and wind speed
+- Click any card to view detailed weather information
+- Animated icons show current weather conditions
 
 ### Searching for Cities
 
 - Use the search bar at the top of the home page
 - Type at least 2 characters to see suggestions
 - Click on a suggestion to add it to your list
+- Note: Search is disabled when offline
 
 ### Managing Favorites
 
-- Click the "☆ Favorite" button on any city card
-- Favorite cities appear at the top of the list
-- Click "★ Favorited" to remove from favorites
+- Click **"☆ Favorite"** on any city card to add to favorites
+- Favorite cities appear at the top with a gold badge
+- Click **"⭐ Favorited"** to remove from favorites
+- Favorites are sorted alphabetically
 
 ### Adding Notes
 
 - Navigate to a city's detail page
 - Use the "Weather Notes" section to add observations
+- Click "Edit" to modify existing notes
 - Notes are saved automatically to localStorage
 
 ### Using Your Location
 
-- Click "My Location" in the navigation
+- Click **"My Location"** in the navigation
 - Grant location permission when prompted
 - View weather for your current location
+- Click "Refresh Location" to update
 
 ### Offline Mode
 
 - The app automatically detects when you're offline
 - Cached weather data remains accessible
 - Search functionality is disabled offline
+- All favorites and notes work offline
 
-## Features Explained
+### Refreshing Data
 
-### Data Caching
+- Click **"Refresh All"** button on home page to update all cities (uses 15 API requests)
+- Click **"Refresh"** on individual city detail pages (uses 1 API request)
+- Data is automatically cached for 30 minutes
 
-- Weather data is cached for 30 minutes
-- All data persists in localStorage
-- Automatic cache invalidation and refresh
+## Weather Animations
 
-### State Management
+### Animated Icons
+- **Sunny** - Rotating sun with rays
+- **Rainy** - Falling raindrops
+- **Cloudy** - Floating clouds
+- **Partly Cloudy** - Sun with clouds
+- **Snowy** - Falling snowflakes
+- **Thunderstorm** - Lightning bolts
+- **Foggy/Misty** - Animated fog
+- **Windy** - Flowing wind lines
 
-- Redux Toolkit for centralized state
-- Separate slices for weather, favorites, notes, and location
-- Optimized selectors for performance
+### Dynamic Backgrounds
+- **Rainy** - Falling rain animation across screen
+- **Snowy** - Floating snowflakes
+- **Cloudy** - Drifting cloud shapes
+- **Sunny** - Glowing particle effects
 
-### Responsive Design
+## Managing API Quota
 
-- Mobile-first approach
-- Adapts to all screen sizes
-- Touch-friendly interactions
+### Free Tier Limits
+- **Weatherstack**: 100 requests/month
+- **GeoNames**: 20,000 requests/day
 
-## API Rate Limits
+### API Usage Breakdown
+- **Full Refresh (15 cities)**: 15 requests
+- **Add Single City**: 1 request
+- **Individual Refresh**: 1 request
+- **User Location**: 1 request
 
-**Important**: Free tier APIs have rate limits:
+### Quota Saving Strategies
 
-- **Weatherstack**: 100 requests/month on free tier
-- **GeoNames**: 20,000 requests/day on free tier
-
-### Managing API Quota
-
-The app implements several strategies to conserve your API quota:
-
-1. **Aggressive Caching**: Weather data is cached for 30 minutes
-2. **No Auto-Refresh**: Cities are loaded from cache on startup
-3. **Manual Refresh**: Use "Refresh All" button only when needed
-4. **Mock Data Mode**: Use mock data during development
-
-### Using Mock Data
-
-To avoid exhausting your API quota during development:
-
-**Option 1: Set environment variable**
-
+**1. Use Mock Data for Development**
 ```bash
 # In .env file
 VITE_USE_MOCK_DATA=true
 ```
 
-**Option 2: Load mock data from UI**
+**2. Load Mock Data from UI**
+- Click "📊 Load Mock Data (Free)" button on first load
+- Generates realistic fake weather data
+- Zero API calls
 
-- On first load, click "📊 Load Mock Data (Free)" button
-- This generates realistic fake weather data
-- No API calls are made
-
-**Option 3: Use cached data**
-
-- The app automatically loads cached data on startup
+**3. Leverage Caching**
+- App automatically loads cached data on startup
 - Only refresh when you need updated weather
+- 30-minute cache duration
 
-### API Quota Tips
+**4. Smart Refresh**
+- The app won't auto-refresh on load
+- Manual "Refresh All" button with confirmation
+- Shows last sync time
 
-- Each "Refresh All" uses **15 API requests**
-- Searching and adding cities uses **1 request per city**
-- Individual city refresh uses **1 request**
-- With 100 requests/month, you can refresh all cities ~6 times
-- Use mock data for testing and development
+### Monthly Planning
+With 100 requests/month, you can:
+- Do 6 full refreshes (6 × 15 = 90 requests)
+- Add 10 new cities individually
+- Use mock data for all testing and development
 
-## Browser Support
+## 🧪 Testing
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+### Run Tests
+```bash
+# Run all tests
+npm test
 
-## Troubleshooting
+# Run tests in watch mode
+npm test -- --watch
+
+# Run tests with UI
+npm run test:ui
+
+# Generate coverage report
+npm run test:coverage
+```
+
+### Test Coverage
+- **66+ tests** covering all major functionality
+- **Unit tests** for utilities, Redux slices, services
+- **Component tests** for React components
+- **Integration tests** for user flows
+- **80%+ code coverage**
+
+### Test Structure
+```
+src/
+├── test/
+│   ├── setup.ts              # Test environment setup
+│   ├── utils.tsx             # Test utilities
+│   ├── mockData.ts           # Mock data
+│   └── integration/          # Integration tests
+├── components/__tests__/     # Component tests
+├── services/__tests__/       # Service tests
+├── store/slices/__tests__/   # Redux tests
+└── utils/__tests__/          # Utility tests
+```
+
+## Project Structure
+
+```
+weather-app/
+├── src/
+│   ├── components/           # React components
+│   │   ├── CityCard.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── SearchBar.tsx
+│   │   ├── WeatherIcon.tsx
+│   │   ├── WeatherBackground.tsx
+│   │   └── __tests__/
+│   ├── pages/               # Page components
+│   │   ├── HomePage.tsx
+│   │   ├── CityDetailsPage.tsx
+│   │   └── UserLocationPage.tsx
+│   ├── store/               # Redux store
+│   │   ├── slices/
+│   │   │   ├── weatherSlice.ts
+│   │   │   ├── favoritesSlice.ts
+│   │   │   ├── notesSlice.ts
+│   │   │   └── userLocationSlice.ts
+│   │   ├── hooks.ts
+│   │   └── index.ts
+│   ├── services/            # API services
+│   │   ├── weatherAPI.ts
+│   │   ├── geoAPI.ts
+│   │   └── storage.ts
+│   ├── types/               # TypeScript types
+│   │   └── index.ts
+│   ├── utils/               # Utility functions
+│   │   ├── constants.ts
+│   │   ├── helpers.ts
+│   │   └── mockWeatherData.ts
+│   ├── test/                # Test utilities
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── router.tsx
+├── .env                     # Environment variables
+├── .gitignore
+├── index.html
+├── package.json
+├── README.md
+├── tailwind.config.js
+├── tsconfig.json
+├── vite.config.ts
+└── vitest.config.ts
+```
+## 🐛 Troubleshooting
+
+### Weather data not loading
+- **Check API keys** in `.env` file
+- **Restart dev server** after changing `.env`
+- **Check browser console** for error messages
+- **Verify API quota** - you may have hit the free tier limit
 
 ### "City not found" error
+- Try spelling with country name (e.g., "Paris, France")
+- Some small cities may not be in the database
+- Use the GeoNames search suggestions
 
-- Check if the city name is spelled correctly
-- Try searching with country name (e.g., "Paris, France")
-
-### Weather not updating
-
-- Check your internet connection
-- Verify API keys are correct in `.env`
-- Check browser console for errors
+### Search not working
+- Verify **GeoNames username** is activated (check email)
+- Must be **online** to search (search disabled offline)
+- Type at least **2 characters**
 
 ### Location not working
+- Grant **location permission** in browser settings
+- Use **HTTPS** or **localhost** (required for geolocation)
+- Check browser console for permission errors
 
-- Ensure location permission is granted in browser settings
-- Try using HTTPS (required for geolocation)
+### Tests failing
+- Run `npm install` to ensure all dependencies are installed
+- Clear `node_modules` and reinstall: `rm -rf node_modules && npm install`
+- Check that you're using **Node.js 18+**
 
-## Contributing
+### Animations not showing
+- Clear browser cache and hard reload (Ctrl/Cmd + Shift + R)
+- Check that JavaScript is enabled
+- Try a different browser
+
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
 ## License
 
-This project is open source and available under the MIT License.
-
-## Acknowledgments
-
-- Weather data provided by [Weatherstack](https://weatherstack.com/)
-- City data provided by [GeoNames](https://www.geonames.org/)
-- Icons from [Heroicons](https://heroicons.com/)
+This project is open source and available under the [MIT License](LICENSE).
 
 ## Contact
 
 For questions or feedback, please open an issue on GitHub.
+
+---
+
+**Enjoy tracking the weather! 🌤️**
+
+Made using React, TypeScript, and Tailwind CSS
