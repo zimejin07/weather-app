@@ -91,7 +91,8 @@ describe("helpers", () => {
       const timestamp = new Date("2024-01-15T10:30:00").getTime();
       const formatted = formatDate(timestamp);
       expect(formatted).toContain("2024");
-      expect(formatted).toContain("Jan"); // or '1/' depending on locale
+      // Check for either "Jan" or "1/" depending on locale
+      expect(formatted.match(/Jan|1\//)).toBeTruthy();
     });
   });
 

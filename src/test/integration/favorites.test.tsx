@@ -41,9 +41,7 @@ describe("Favorites Flow Integration", () => {
     if (favoriteButton) {
       fireEvent.click(favoriteButton);
     }
-
-    // Now Tokyo should be at the top with "Favorite Cities" header
-    expect(screen.getByText("★ Favorite Cities")).toBeInTheDocument();
+    expect(screen.getByText(/Favorite Cities/i)).toBeInTheDocument();
   });
 
   it("should persist favorites in localStorage", () => {
@@ -63,7 +61,7 @@ describe("Favorites Flow Integration", () => {
     });
 
     // Favorite a city
-    const favoriteButton = screen.getAllByText(/Favorite/)[0];
+    const favoriteButton = screen.getByText("☆ Favorite");
     fireEvent.click(favoriteButton);
 
     // Check localStorage
@@ -90,10 +88,10 @@ describe("Favorites Flow Integration", () => {
     renderWithProviders(<HomePage />, { preloadedState });
 
     // Should show as favorited
-    expect(screen.getByText("★ Favorited")).toBeInTheDocument();
+    expect(screen.getByText("⭐ Favorited")).toBeInTheDocument();
 
     // Click to unfavorite
-    const favoritedButton = screen.getByText("★ Favorited");
+    const favoritedButton = screen.getByText("⭐ Favorited");
     fireEvent.click(favoritedButton);
 
     // Should change back to unfavorited

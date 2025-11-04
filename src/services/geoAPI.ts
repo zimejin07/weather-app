@@ -12,7 +12,7 @@ class GeoAPIService {
    */
   async searchCities(
     query: string
-  ): Promise<Array<{ name: string; country: string }>> {
+  ): Promise<Array<{ name: string; country?: string }>> {
     try {
       if (!query || query.length < 2) {
         return [];
